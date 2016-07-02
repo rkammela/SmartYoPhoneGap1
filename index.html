@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+	<title>SmartYo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Prevent scaling -->
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
+
+	<!-- Eliminate url and button bars if added to home screen -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<!-- Choose how to handle the phone status bar -->
+	<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<!-- Specify a 320x460 start-up image. -->
+	<link rel="apple-touch-startup-image" href="images/SmartYoLogo.png" />
+
+	<!-- <link rel="apple-touch-startup-image" href="img/startupiPad.png" />-->
+
+	<!-- Choose a 57x57 image for the icon -->
+	<link rel="apple-touch-icon" href="images/SmartYoLogo.png" />
+
+<!--
+	<link href="css/Index.css" rel='stylesheet' type='text/css' />
+
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<link rel="stylesheet" href="http://localhost:90/SmartYo/css/layout.css">
+ 
+	
+-->
+<link rel="manifest" href="manifest7.json">
+
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<link rel="stylesheet" href="js/jquery.mobile-1.4.5.SY.min.css">
+
+
+
+<script src="https://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+
+<script src="https://smartyo.firebaseapp.com/js/jquery.knob.js"></script>
+
+<link href="https://smartyo.firebaseapp.com/css/patternLock.css"  rel="stylesheet" type="text/css" />
+<script src="https://smartyo.firebaseapp.com/js/patternLock.js"></script>
+
+
+<style>
+html, body
+{
+	height: 100%;
+}
+.bold {
+	color: #4379cf;  width:100%; font-weight: bold;
+}
+
+body {
+	margin: 0;
+	text-align: center;
+	background-color: #414141;
+	font-family: "Times New Roman";
+	text-shadow: 0 0px 0 #000000; 
+	line-height: 1;
+	font-weight: 500;
+}
+
+canvas{
+	background-color:transparent;
+}
+.nopadding{
+	margin: 0;
+	text-align: center;
+	width: 100%;
+	background-color: #414141;
+	border-width: 0px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	align-content: center;
+	text-shadow: 0 0px 0 #000000; 
+	font-weight: 500;
+
+}
+.tabs{
+	color: white;
+	width:33%;
+	background-color: #414141;
+	border: none;
+	text-align: center;
+	align-content: center;
+	padding-top: 4px;
+	text-shadow: 0 0px 0 #000000; 
+}
+.selected{
+	background-color: orange; height: 2px;
+}
+.unselected{
+	background-color: #414141;
+}
+.unselectedLight{
+	background-color: #5d5d5d;
+}
+
+.tableID{
+	width:100%; text-align:center;border-collapse: collapse;
+}
+.tdID{
+	white-space: nowrap; border-right:2pt solid #e1e1e1;  font-size: 17px; font-weight:bold; vertical-align: middle; color: #ff8040;
+}
+.tdName{
+	color:gray;	text-align:left; width:100%; border-bottom:2pt solid #e1e1e1; height: 40px; font-size: 17px;  vertical-align: middle;
+}
+
+.tdSettings{
+	border-bottom:2pt solid #e1e1e1; border-right:2pt solid #e1e1e1;  height: 40px; font-size: 17px; font-weight:bold; vertical-align: middle; color: #ff8040;
+}
+
+.blink {
+	animation:fade 3000ms infinite;
+	-webkit-animation:fade 3000ms infinite;
+}
+
+@-webkit-keyframes blink {
+	0% {
+		opacity:1;
+	}
+	50% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+@-moz-keyframes blink {
+	0% {
+		opacity:1;
+	}
+	50% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}
+.objblink {
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	-ms-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+
+	-webkit-animation-direction: normal;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-name: blink;
+	-webkit-animation-timing-function: ease-in-out;
+
+	-moz-animation-direction: normal;
+	-moz-animation-duration: 2s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-name: blink;
+	-moz-animation-timing-function: ease-in-out;
+	background-color: #ffa500;
+	color:black;	
+	text-align:left; 
+	width:100%; 
+	border-bottom:2pt solid #e1e1e1; 
+	height: 40px; 
+	font-size: 17px;  
+	vertical-align: middle;
+
+}
+
+.objblinkD {
+	-webkit-transition: all 1s ease-in-out;
+	-moz-transition: all 1s ease-in-out;
+	-o-transition: all 1s ease-in-out;
+	-ms-transition: all 1s ease-in-out;
+	transition: all 1s ease-in-out;
+
+	-webkit-animation-direction: normal;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-name: blink;
+	-webkit-animation-timing-function: ease-in-out;
+
+	-moz-animation-direction: normal;
+	-moz-animation-duration: 2s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-name: blink;
+	-moz-animation-timing-function: ease-in-out;
+	background-color: gray;
+	color: white;
+	text-align: left; 
+	width: 100%; 
+	border-bottom:2pt solid #e1e1e1;
+	height: 40px; 
+	font-size: 17px;  
+	vertical-align: middle;
+
+}
+
+.heaterblink {
+	-webkit-transition: all 2s ease-in-out;
+	-moz-transition: all 2s ease-in-out;
+	-o-transition: all 2s ease-in-out;
+	-ms-transition: all 2s ease-in-out;
+	transition: all 2s ease-in-out;
+
+	-webkit-animation-direction: normal;
+	-webkit-animation-duration: 3s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-name: blink;
+	-webkit-animation-timing-function: ease-in-out;
+
+	-moz-animation-direction: normal;
+	-moz-animation-duration: 3s;
+	-moz-animation-iteration-count: infinite;
+	-moz-animation-name: blink;
+	-moz-animation-timing-function: ease-in-out;
+}
+
+.swipeleft {
+	background-color: #ff8040;
+}
+
+.verticalText
+{
+	-ms-transform:rotate(270deg); /* IE 9 */
+	-moz-transform:rotate(270deg); /* Firefox */
+	-webkit-transform:rotate(270deg); /* Safari and Chrome */
+	-o-transform:rotate(270deg); /* Opera */
+}
+
+</style>
+
+<script>
+function doOnOrientationChange() {
+	// document.getElementById("divTemp").innerHTML = window.orientation;
+
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		if ((window.orientation != 90) && (window.orientation != -90)){
+			document.getElementById('divBlockLandscape').style.left = '-9000px';
+			document.getElementById('divBlockLandscape').style.width = window.innerWidth;
+			document.getElementById('divBlockLandscape').style.height = window.innerHeight;
+		} else {
+			document.getElementById('divBlockLandscape').style.left = '0px';
+			document.getElementById('divBlockLandscape').style.width = window.innerWidth;
+			document.getElementById('divBlockLandscape').style.height = window.innerHeight;
+		}
+	}
+}
+
+window.addEventListener("orientationchange", doOnOrientationChange, false);
+</script>
+</head>
+<body id="body">
+<!-- horizontal form 
+
+<div id="flash" style="width:100%; height:100%; text-align:center; background-color:#414141; border-collapse: collapse;  position: absolute; left:0px; top:0px; z-index:9000;">
+<table  style="width:100%; height:100%; text-align:center; background-color:#414141; border-collapse: collapse;  position: absolute; left:0px; top:0px; z-index:9000;">
+<tr><td><img src="images/SmartYoLogo.png"></td></tr>
+</table>
+</div> -->
+<div id="backdrop" style="width:100%; height:700px; text-align:center; background-color:#414141; border-collapse: collapse; visibility: visible;  position: absolute; left:0px; top:0px; z-index:9000;">
+
+</div>
+
+<table id="tblLogo" class="nopadding" style="width:100%; height:60px; top: 0px; position: absolete; background-color: #414141; visibility: hidden;" data-role="header"  data-position="fixed"  data-tap-toggle="false">
+	
+	<!-- data-fullscreen="true" -->
+	<tr>
+		<td style="Width:10px;">&nbsp;</td>
+		<td>
+			<table class="nopadding">
+				<tr>
+					<td class="tabs" onclick="ToggleHome();" rowspan="1" style="font-size: 22px;" >SmartYo</td>
+				</tr>
+				<tr>
+					<td style="white-space: nowrap;"><img id="Heat" class="" width="17px" height="17px"  src="images/HeatD.png"> <img id="Cool" class="" width="17px" height="17px"  src="images/CoolD.png">  <img id="Timer" class=""  width="17px" height="17px"  src="images/TimerD.png">  <img id="Stir" class="" width="17px" height="17px"  src="images/StirD.png"></td>
+				</tr>
+			</table>
+		</td>
+		<td style="Width:100%; text-align:center; vertical-align: middle;">
+			<a id="approveButton"  width="34px" height="34px" class="heaterblink" style="visibility: hidden;" href="#popupDialog" data-rel="popup" data-position-to="window" data-inline="true" data-transition="slidedown" data-theme="b">
+				<img id="imgHand"  width="34px" height="34px"  src="images/Hand.png">
+			</a>
+
+		</td>
+		<td style="">
+
+			<table id="tblCurrentRecipe" class="nopadding" style="color: orange; visible: visible;">
+				<tr>
+					<td colspan="4" onclick="showCurrentRecipe();" id="currentRecipeName" style="white-space: nowrap; font-size: 14px; text-align:right;" ></td>
+				</tr>
+				<tr>
+					<td style="width:100%;">&nbsp;</td>
+					<td style="width:10px;">
+						<table class="nopadding">
+							<tr>
+								<td rowspan="2" style="Width:17px;"><img id="imgTemperature" width="17px" height="17px" style="visibility: visible;"  src="images/TemperatureD.png"></td>
+								<td id="temperatureTo" style="font-size: 9px; text-align:center; Width:40px;"></td>
+							</tr>
+							<tr>
+								<td id="temperature" style="font-size: 11px; text-align:center;Width:40px;"></td><td>&nbsp;</td><td id="tempChange" style="font-size: 11px; text-align:center;Width:40px;"></td>
+							</tr>
+						</table>
+					</td>
+					<td style="Width:10px;"></td>
+					<td style="width:10px;">
+						<table class="nopadding">
+							<tr>
+								<td rowspan="2" style="Width:17px;"><img id="Timer2"  width="17px" height="17px" style="visibility: hidden;"  src="images/TimerD.png"></td>
+								<td id="timeTo" style="font-size: 9px; text-align:center; Width:40px;"></td>
+							</tr>
+							<tr>
+								<td id="time" style="font-size: 11px; text-align:center;Width:40px;"></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+
+		</td>
+	</tr>
+	<tr>
+		<td colspan="4" class="selected" >
+		</td>
+	</tr>
+</table>
+
+
+
+
+
+
+<table id="tblRecipeName" class="nopadding" style=" height:15px;	top: 0px; position: absolete; visibility: hidden;">
+	<tr>
+		<td style="font-size: 14px; width: 90%" id="recipeName" class="tabs" >
+
+		</td>
+		<td onclick="showHistory();" style="font-size: 12px;" class="tabs">
+			History
+		</td> 
+	</tr>
+</table>
+
+<iframe id="ifryoutube" width="100%"  height="200px" src="" frameborder="0" style="overflow:hidden; visibility: hidden;" allowfullscreen></iframe>
+
+<a id="startStop" href="#startStopDialog" data-rel="popup" data-position-to="window" data-inline="true" data-transition="slidedown" data-theme="b">
+	<img id="imgPlay"  width="40px" height="40px" style="position: absolute; left: 10px; top: 80px; visibility: hidden; z-index:1000;"  src="images/Play.png">
+</a>
+
+
+
+<table id="tblTabs" class="nopadding" style="	top: -5px; position: relative; visibility: hidden;">
+	<tr><td class="tabs"  onclick="selecttab('Ing');">
+		<table class="nopadding">
+			<tr><td style="font-size: 14px;">Ingredients</td></tr>
+			<tr><td id="noOfIngredients" style="font-size: 12px;">2</td></tr>
+		</table>
+	</td><td class="tabs" style="background-color: #5d5d5d;" onclick="selecttab('Dir');">
+	<table class="nopadding" style="background-color: #5d5d5d;">
+		<tr><td style="font-size: 14px;">Process</td></tr>
+		<tr><td id="cookTime" style="font-size: 12px;">4 Hours</td></tr>
+	</table>
+</td><td class="tabs"  onclick="selecttab('Nut');">
+<table class="nopadding">
+	<tr><td id="nutOrLog" style="font-size: 14px;">Nutrition</td></tr>
+	<tr><td id="remainingTime" style="font-size: 12px;">100 Calories</td></tr>
+</table>
+</td></tr>
+<tr><td id="IngSel" style="background-color: orange; height: 2px;" >
+
+</td><td id="DirSel" style="height: 2px;">
+
+</td><td id="NutSel" style="height: 2px;">
+
+</td></tr>
+</table>
+
+<table id="tblIngredients" style="width:100%; text-align:left;border-collapse: collapse;  position: absolute; left:0px; top:316px; visibility: hidden; background-color:#f9f9f9;">
+
+</table>
+
+<table id="tblDirections" style="width:100%; text-align:center;border-collapse: collapse; visibility: hidden; position: absolute; left:0px; top:316px; background-color:#f9f9f9;">
+</table>
+
+<table id="tblNutrition" style="width:100%; height:590px; text-align:center;border-collapse: collapse;  position: absolute; left:0px; top:316px; visibility: hidden; background-color:#f9f9f9; text-shadow: 0 0px 0 #000000;">
+	<tr >
+		<td style="border-bottom:2pt solid #e1e1e1; height: 40px; font-size: 17px; font-weight:bold; vertical-align: middle; color: #ff8040;">
+			<img src="images/NutritionsMarkUp.png">
+		</td>
+
+	</tr>
+
+</table>
+
+<table id="tblHomeStatic" style="visibility:hidden;">
+	<tr>
+		<td style="height:10px;">
+			&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td style="width:10px;">&nbsp;&nbsp;</td>
+		<td style="background-color:#5d5d5d; padding: 5px; color: white; width:50%">
+			<img id="backimgManual" onclick="showtblManual();" style="width:150px; height:150px;" src="images/AlarmThermoHandD.png">
+		</td>
+		<td style="width:10px;">&nbsp;&nbsp;</td>
+		<td style="background-color:#5d5d5d; padding: 5px; color: white; width:50%">
+
+			<img id="backimgSettings" onclick="showHistory();" style="width:150px; height:150px;" src="images/Settings.png">
+
+		</td>
+		<td style="width:10px;">&nbsp;&nbsp;</td>
+	</tr>
+	<tr>
+		<td style="height:10px;">
+
+		</td>
+	</tr>
+</table>
+
+<table id="tblHome" class="nopadding" style="position: absolute; left:0px; top:54px; visibility:hidden;">
+
+</table>
+
+
+<table id="tblManual" class="nopadding" style="position: absolute; left:0px; top:65px; visibility:hidden;">
+	<tr>
+		<td rowspan="1" style="width:10px" ><img src="images/TemperatureV.png"></img></td>
+		<td rowspan="1" style="10px">
+
+		</td>
+		<td rowspan="1" style="color: white; font-size: 20px; line-height: 1.3; font-family: sans-serif; vertical-align:middle" >
+			<br>
+			<input type="text" class="dialTempManual" inputdata-min="-50" value="0"  data-max="50" data-role="none">
+
+		</td>
+		<td rowspan="1" style="10px">
+
+		</td>
+		<td rowspan="1"  style="100%" style="vertical-align:middle;">
+			<fieldset data-role="controlgroup" data-mini="true">
+				<input type="radio" name="radio-temp" id="radio-temp-Warm" value="50" />
+				<label for="radio-temp-Warm">Warm</label>
+				<input type="radio" name="radio-temp" id="radio-temp-Poach" value="71"  />
+				<label for="radio-temp-Poach">Poach</label>
+				<input type="radio" name="radio-temp" id="radio-temp-Simmer" value="85"  />
+				<label for="radio-temp-Simmer">Simmer</label>
+				<input type="radio" name="radio-temp" id="radio-temp-Boil" value="100"  />
+				<label for="radio-temp-Boil">Boil</label>
+				<input type="radio" name="radio-temp" id="radio-temp-Saute" value="185"  />
+				<label for="radio-temp-Saute">Saute</label>
+				<input type="radio" name="radio-temp" id="radio-temp-Sear" value="230"  />
+				<label for="radio-temp-Sear">Sear</label>
+			</fieldset>
+		</td>
+		<td rowspan="1" style="35px">
+			&nbsp;
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="6" style="color: white; font-size: 20px; line-height: 1.3; font-family: sans-serif; white-space: nowrap; text-align:center;" >
+			<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
+
+				<input type="radio" name="radio-fan" id="radio-fan-off" value="0.0" checked="checked" />
+				<label for="radio-fan-off">off</label>
+				<input type="radio" name="radio-fan" id="radio-fan-low" value="0.3"  />
+				<label for="radio-fan-low">low</label>
+				<input type="radio" name="radio-fan" id="radio-fan-medium" value="0.6"  />
+				<label for="radio-fan-medium">medium</label>
+				<input type="radio" name="radio-fan" id="radio-fan-high" value="0.8"  />
+				<label for="radio-fan-high">high</label>
+				<input type="radio" name="radio-fan" id="radio-fan-10" value="" disabled />
+				<label for="radio-fan-10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fan&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			</fieldset>
+
+			<fieldset data-role="controlgroup" data-mini="true" data-type="horizontal">
+				<input type="radio" name="radio-stirrer" id="radio-stirrer-off" value="off" checked="checked" />
+				<label for="radio-stirrer-off">off</label>
+				<input type="radio" name="radio-stirrer" id="radio-stirrer-low" value="low"  />
+				<label for="radio-stirrer-low">low</label>
+				<input type="radio" name="radio-stirrer" id="radio-stirrer-medium" value="medium"  />
+				<label for="radio-stirrer-medium">medium</label>
+				<input type="radio" name="radio-stirrer" id="radio-stirrer-high" value="high"  />
+				<label for="radio-stirrer-high">high</label>
+				<input type="radio" name="radio-stirrer" id="radio-stirrer-0" value="" disabled />
+				<label for="radio-stirrer-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stirrer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+			</fieldset>
+		</td>
+
+	</tr>
+
+	<tr>
+		<td>
+			<br>
+		</td>
+
+	</tr>
+
+	<tr>
+		<td rowspan="1" style="width:10px"><img src="images/TimerV.png"></img></td>
+		<td rowspan="1" style="10px">
+
+		</td>
+		<td rowspan="1" style="color: white; font-size: 20px; line-height: 1.3; font-family: sans-serif; vertical-align:middle" >
+			<br>
+			<input type="text" class="dialTimeManual" data-min="-50" value="0" data-max="50" data-role="none">
+
+		</td>
+		<td rowspan="1" style="10px">
+
+		</td>
+		<td rowspan="1" style="100%; vertical-align:middle">
+			<fieldset data-role="controlgroup" data-mini="true">
+				<input type="radio" name="radio-timer" id="radio-mini-1" value="15" checked="checked" />
+				<label for="radio-mini-1">15 mins</label>
+				<input type="radio" name="radio-timer" id="radio-mini-2" value="30"  />
+				<label for="radio-mini-2">30 mins</label>
+				<input type="radio" name="radio-timer" id="radio-mini-3" value="60"  />
+				<label for="radio-mini-3">1 hour</label>
+				<input type="radio" name="radio-timer" id="radio-mini-4" value="120"  />
+				<label for="radio-mini-4">2 hours</label>
+				<input type="radio" name="radio-timer" id="radio-mini-5" value="180"  />
+				<label for="radio-mini-5">3 hours</label>
+				<input type="radio" name="radio-timer" id="radio-mini-6" value="240"  />
+				<label for="radio-mini-6">4 hours</label>
+			</fieldset>
+		</td>
+		<td rowspan="1" style="15px">
+
+		</td>
+	</tr>
+
+</table>
+
+<table id="tblHistory" style="width:100%; text-align:center;border-collapse: collapse; visibility: hidden; position: absolute; left:0px; top:60px; text-shadow: 0 0px 0 #000000;  background-color:#f9f9f9; " >
+
+</table>
+
+
+<div data-role="popup" id="tempDialog" data-overlay-theme="b" data-theme="b" data-dismissible="true" style="max-width:400px; width:300px;" class="ui-corner-all">
+	<div data-role="header" data-theme="a" class="ui-corner-top" style="white-space: nowrap;">
+		<h1 id="EditStepID" style="color: #ff8040">Manual Settings</h1>
+	</div>
+	<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+		<table>
+			<tr>
+
+				<td rowspan="7">
+					<input type="text" class="dialTemp" inputdata-min="-50" value="0"  data-max="50" data-role="none">
+				</td>
+				<td rowspan="7" style="35px">
+					&nbsp;
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td onclick="setTemperature(50);">
+					Warm
+				</td>
+			</tr>
+
+			<tr>
+				<td onclick="setTemperature(71);">
+					Poach
+				</td>
+			</tr>
+			<tr>
+				<td onclick="setTemperature(85);">
+					Simmer
+				</td>
+			</tr>
+<!--<tr>
+	<td onclick="setTemperature(96);">
+		Slow Boil
+	</td>
+</tr>-->
+<tr>
+	<td onclick="setTemperature(100);">
+		Boil
+	</td>
+</tr>
+<tr>
+	<td onclick="setTemperature(185);">
+		Saute
+	</td>
+</tr>
+<tr>
+	<td onclick="setTemperature(230);">
+		Sear
+	</td>
+</tr>
+<tr>
+	<td>
+		&nbsp;
+	</td>
+</tr>
+<tr>
+	
+	<td rowspan="7">
+		<input type="text" class="dialTime" data-min="-50" value="0" data-max="50" data-role="none">
+	</td>
+	<td rowspan="7" style="15px">
+	</td>
+	<td>
+	</td>
+</tr>
+<tr>
+	<td onclick="setTime(15);">
+		15 min
+	</td>
+</tr>
+<tr>
+	<td onclick="setTime(30);">
+		30 min
+	</td>
+</tr>
+<tr>
+	<td onclick="setTime(60);">
+		1 hour
+	</td>
+</tr>
+<tr>
+	<td onclick="setTime(120);">
+		2 hours
+	</td>
+</tr>
+<tr>
+	<td onclick="setTime(180);">
+		3 hours
+	</td>
+</tr>
+<tr>
+	<td onclick="setTime(240);">
+		4 hours
+	</td>
+</tr>
+</table>
+
+
+    <!--<div style="position:absolute;left:10px;top:10px;" data-role="none">
+                <input class="knob hour" data-min="0" data-max="24" data-bgColor="#333" style="background-color:transparent;" data-fgColor="#ffec03" data-displayInput=false data-width="300" data-height="300" data-thickness=".3">
+            </div>
+            <div style="position:absolute;left:60px;top:60px" class="">
+                <input class="knob minute" data-min="0" data-max="60" data-bgColor="#333" data-displayInput=false data-width="200" data-height="200" data-thickness=".45">
+            </div>
+            <div style="position:absolute;left:110px;top:110px">
+                <input class="knob second" data-min="0" data-max="60" data-bgColor="#333" data-fgColor="rgb(127, 255, 0)" data-displayInput=false data-width="100" data-height="100" data-thickness=".3">
+            </div>
+        </div>
+    -->
+
+</div>
+</div>
+
+
+
+
+<div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+	<div data-role="header" data-theme="a" class="ui-corner-top">
+		<h1>Are you sure?</h1>
+	</div>
+	<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+		<h3 class="ui-title">Are you sure you completed this step in recipe?</h3>
+		<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">No</a>
+
+        <!--<a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" onclick="if ($('#passcode1').val() == passCode) {$('#passcode1').val(''); $('#incpasscode').html(''); ButtonPressed('objblink');} else {$('#incpasscode1').html('Incorrect passcode'); return false;}; ">Yes</a>
+    -->
+
+    <div id="stepPatternLock" style="margin: 0 auto;" href="#" data-role="button" data-inline="true" data-rel="back"></div>
+</div>
+</div>
+
+
+<div data-role="popup" id="startStopDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+	<div data-role="header" data-theme="a" class="ui-corner-top">
+		<h1>Are you sure?</h1>
+	</div>
+	<div data-role="content" data-theme="d" class="ui-corner-bottom ui-content">
+		<h3 id="startStopMsg" class="ui-title">Are you sure you want to start this recipe?</h3>
+		<a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">No</a>
+
+        <!--<label  for="number-pattern">Enter passcode:</label><div id="incpasscode"> </div>
+        <input id="passcode" type="number" name="number" pattern="[0-9]*" id="number-pattern" value="">
+        <a href="#" data-role="button" data-inline="true" data-rel="back" data-transition="flow" data-theme="b" onclick="if ($('#passcode').val() == passCode) {$('#passcode').val(''); $('#incpasscode').html(''); StartRecipe();} else {$('#incpasscode').html('Incorrect passcode'); return false;}; ">Yes</a>
+    -->
+    <div id="recipePatternLock" style="margin: 0 auto;" href="#" data-role="button" data-inline="true" data-rel="back"></div>
+</div>
+</div>
+
+
+
+<script>
+
+
+$("[name=radio-temp]").change(function(event) { 
+	console.log($('input[name=radio-temp]:checked').val());
+	setTemperatureManual($('input[name=radio-temp]:checked').val());
+
+});
+
+$("[name=radio-timer]").change(function(event) { 
+	console.log($('input[name=radio-timer]:checked').val());
+
+});
+
+
+$("[name=radio-fan]").change(function(event) { 
+	console.log($('input[name=radio-fan]:checked').val());
+
+	if ((CurrentRecipeID == -1) || (CurrentRecipeID == 100)){
+
+
+		if (CurrentRecipeID == -1){
+			toBeFan = $('input[name=radio-fan]:checked').val();
+			$( "#startStopDialog" ).popup("open");
+		}		
+		else {
+
+			var myDataRef = new Firebase('https://smartyo.firebaseio.com/configuration/fan');
+			myDataRef.set($('input[name=radio-fan]:checked').val());
+
+			var myDataRef = new Firebase('https://smartyo.firebaseio.com/configuration/recipeID');
+			myDataRef.set(100);
+		}
+
+
+	}
+
+});
+
+$("[name=radio-stirrer]").change(function(event) { 
+	console.log($('input[name=radio-stirrer]:checked').val());
+
+});
+
+
+var toBeTemp
+var toBeTimer
+var toBeFan
+var toBeStirrer
+
+function setTemperatureManual(temp){
+	$('.dialTempManual').val(temp).trigger('change');
+}
+
+function setTimeManual(time){
+	$('.dialTimeManual').val(time).trigger('change');
+}
+
+function formatDate(date) {
+	var d = new Date(date),
+	month = '' + (d.getMonth() + 1),
+	day = '' + d.getDate(),
+	year = d.getFullYear();
+	hour = d.getHours();
+	if (hour >= 12){
+		ampm = 'PM'
+		hour = hour - 12;
+	}
+	else{
+		ampm = 'AM'
+	}
+	minute = d.getMinutes();
+	second = d.getSeconds();
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return [month, day, year].join('-') + ' ' + [hour,minute,second].join(':') + ' ' + ampm;
+
+}
+
+//var fredRef = new Firebase('https://medtrac.firebaseio.com/MedCanisterLog');
+//fredRef.remove();
+
+var slock = new PatternLock('#stepPatternLock',{radius:30,margin:10
+});    
+
+
+slock.checkForPattern('7896321',function(){
+	ButtonPressed('objblink');
+	slock.reset();
+	$( "#popupDialog" ).popup("close");
+},function(){
+
+}); 
+
+
+
+var rlock = new PatternLock('#recipePatternLock',{radius:30,margin:10
+});    
+
+
+rlock.checkForPattern('7896321',function(){
+	StartRecipe();
+	rlock.reset();
+	$( "#startStopDialog" ).popup("close");
+},function(){
+
+}); 
+
+
+$(function() {
+	$(".dialTemp").knob({
+		'min':0
+		,'max':230
+		,'width':200
+		,'angleOffset' :-160
+		,'angleArc' :320
+		,'release' : saveTempToFBFromKnob
+		,'draw' : function () { $(this.i).val(this.cv + 'c'); }
+	});
+	$(".dialTime").knob({
+		'min':-2
+		,'max':360
+		,'width':200
+		,'angleOffset' :-160
+		,'angleArc' :320
+		,'release' : saveTimeToFBFromKnob
+		,'draw' : function () { $(this.i).val(this.cv + 'm'); }
+	});
+	//$(".knob").knob();
+
+
+
+});
+
+
+$(function() {
+	$(".dialTempManual").knob({
+		'min':0
+		,'max':230
+		,'width':180
+		,'angleOffset' :-160
+		,'angleArc' :320
+		,'release' : saveTempToFBFromKnob
+		,'draw' : function () { $(this.i).val(this.cv + 'c'); }
+	});
+	$(".dialTimeManual").knob({
+		'min':-2
+		,'max':360
+		,'width':180
+		,'angleOffset' :-160
+		,'angleArc' :320
+		,'release' : saveTimeToFBFromKnob
+		,'draw' : function () { $(this.i).val(this.cv + 'm'); }
+	});
+	//$(".knob").knob();
+
+
+
+});
+
+
+
+var tempUpdateURL = ""
+var timeUpdateURL = ""
+
+$( "#tempDialog" ).bind({
+	popupafterclose: function(event, ui) { tempUpdateURL = ""; timeUpdateURL = ""; document.getElementById("EditStepID").innerHTML = "Manual settings";}
+});
+
+ /*$( "#tempDialog" ).bind({
+	   popupafteropen: function(event, ui) { tempUpdateURL = ""; timeUpdateURL = ""; document.getElementById("EditStepID").innerHTML = "Manual settings";}
+	});
+*/
+
+function setTemperature(temp){
+	$('.dialTemp').val(temp).trigger('change');
+}
+
+function setTime(time){
+	$('.dialTime').val(time).trigger('change');
+}
+
+
+function saveTempToFBFromKnob(v){
+	console.log("url" + tempUpdateURL)
+	if (tempUpdateURL != ''){
+		var myDataRef = new Firebase(tempUpdateURL);
+		myDataRef.set(v);
+	}
+	else{
+		console.log(RecipeID)
+		if ((CurrentRecipeID == -1) || (CurrentRecipeID == 100)){
+
+
+			if (CurrentRecipeID == -1){
+				toBeTemp = v;
+				$( "#startStopDialog" ).popup("open");
+			}		
+			else {
+				
+				var myDataRef = new Firebase('https://smartyo.firebaseio.com/configuration/target');
+				myDataRef.set(v);
+
+				var myDataRef = new Firebase('https://smartyo.firebaseio.com/configuration/recipeID');
+				myDataRef.set(100);
+			}
+
+
+		}
+	}
+}
+
+
+function saveTimeToFBFromKnob(v){
+	console.log(timeUpdateURL);
+	if (timeUpdateURL != ''){
+		var myDataRef = new Firebase(timeUpdateURL);
+		myDataRef.set(v * 60);
+	}
+}
+
+function clock() {
+	var $s = $(".second"),
+	$m = $(".minute"),
+	$h = $(".hour");
+	d = new Date(),
+	s = d.getSeconds(),
+	m = d.getMinutes(),
+	h = d.getHours();
+	$s.val(s).trigger("change");
+	$m.val(m).trigger("change");
+	$h.val(h).trigger("change");
+	setTimeout("clock()", 1000);
+}
+//clock();
+
+$.fn.timer = function( userdefinedoptions ){ 
+	var $this = $(this), opt, count = 0; 
+
+
+	opt = $.extend( { 
+        // Config 
+        'timer' : 10, // 300 second default
+        //'width' : 24 ,
+        //'height' : 24 ,
+        'fgColor' : "#ED7A53" ,
+        'bgColor' : "#232323" 
+    }, userdefinedoptions 
+    ); 
+
+
+	$this.knob({ 
+		'min':0, 
+		'max': opt.timer, 
+		'readOnly': true, 
+		'width': opt.width, 
+		'height': opt.height, 
+		'fgColor': opt.fgColor, 
+		'bgColor': opt.bgColor,                 
+		'displayInput' : false, 
+		'dynamicDraw': false, 
+		'ticks': 0, 
+		'thickness': 0.6 
+	}); 
+
+
+	setInterval(function(){ 
+		newVal = ++count; 
+		$this.val(newVal).trigger('change'); 
+	}, 1000); 
+};
+
+//$('.dialTime').timer();
+
+
+
+
+
+
+function selecttab(tab){
+
+	if (tab == 'Ing') {
+		document.getElementById("tblIngredients").style.visibility = 'visible';
+		document.getElementById("tblDirections").style.visibility = 'hidden';
+		document.getElementById("tblNutrition").style.visibility = 'hidden';
+
+
+		document.getElementById("IngSel").style.backgroundColor= "orange";
+		document.getElementById("DirSel").style.backgroundColor= "#5d5d5d";
+		document.getElementById("NutSel").style.backgroundColor= "#414141";
+	}
+
+	if (tab == 'Dir') {
+		document.getElementById("tblIngredients").style.visibility = 'hidden';
+		document.getElementById("tblDirections").style.visibility = 'visible';
+		document.getElementById("tblNutrition").style.visibility = 'hidden';
+
+		document.getElementById("IngSel").style.backgroundColor= "#414141";
+		document.getElementById("DirSel").style.backgroundColor= "orange";
+		document.getElementById("NutSel").style.backgroundColor= "#414141";
+
+	}
+
+
+	if (tab == 'Nut') {
+
+		if ((CurrentRecipeID == RecipeID) && (CurrentRecipeID != -1)){
+			document.getElementById("nutOrLog").innerHTML = "Status"
+			document.getElementById("remainingTime").innerHTML = ""
+
+			addCurrentRecipeLog();
+		}
+		else {
+			document.getElementById("nutOrLog").innerHTML = "Nutrition"
+			document.getElementById("remainingTime").innerHTML = "100 Calories"
+
+			var trHTML
+			trHTML =  '<tr ><td style="border-bottom:2pt solid #e1e1e1; height: 40px; font-size: 17px; font-weight:bold; vertical-align: middle; color: #ff8040;"><img src="images/NutritionsMarkUp.png"></td></tr>' 
+
+			$('#tblNutrition').empty();
+			$('#tblNutrition').append(trHTML);
+					
+
+			
+		}
+		document.getElementById("tblIngredients").style.visibility = 'hidden';
+		document.getElementById("tblDirections").style.visibility = 'hidden';
+		document.getElementById("tblNutrition").style.visibility = 'visible';
+
+		document.getElementById("IngSel").style.backgroundColor= "#414141";
+		document.getElementById("DirSel").style.backgroundColor= "#5d5d5d";
+		document.getElementById("NutSel").style.backgroundColor= "orange";
+	}
+
+
+}
+
+function ToggleHome(){
+
+	if (document.getElementById("tblHome").style.visibility == 'hidden' || RecipeID == -1){
+
+		showHome();
+	}
+	else if (RecipeID != -1) {
+		showRecipe();
+	}
+	else {
+
+		showHistory();
+	}
+}
+
+
+function showHome(){
+//	$.mobile.silentScroll(0);
+$( "html" ).scrollTop(0);
+$('html, body').stop().animate({ scrollTop : 0 }, 500);
+window.scrollTo(0, 0);
+
+
+document.getElementById("imgPlay").style.visibility = 'hidden';
+
+document.getElementById("tblManual").style.visibility = 'hidden';
+
+document.getElementById("tblRecipeName").style.visibility = 'hidden';
+document.getElementById("ifryoutube").style.visibility = 'hidden';
+document.getElementById("tblTabs").style.visibility = 'hidden';
+document.getElementById("tblIngredients").style.visibility = 'hidden';
+document.getElementById("tblDirections").style.visibility = 'hidden';
+document.getElementById("tblNutrition").style.visibility = 'hidden';
+
+document.getElementById("tblHome").style.visibility = 'visible';
+
+document.getElementById("tblHistory").style.visibility = 'hidden';
+
+}
+
+var historyLoaded = false;
+
+function showHistory(){
+	document.getElementById("tblManual").style.visibility = 'hidden';
+
+	document.getElementById("tblRecipeName").style.visibility = 'hidden';
+	document.getElementById("ifryoutube").style.visibility = 'hidden';
+	document.getElementById("tblTabs").style.visibility = 'hidden';
+	document.getElementById("tblIngredients").style.visibility = 'hidden';
+	document.getElementById("tblDirections").style.visibility = 'hidden';
+	document.getElementById("tblNutrition").style.visibility = 'hidden';
+
+	document.getElementById("imgPlay").style.visibility = 'hidden';
+
+	document.getElementById("tblHome").style.visibility = 'hidden';
+
+	//if (historyLoaded == false){
+		addHistory();
+		historyLoaded = true;	
+	//}
+	document.getElementById("tblHistory").style.visibility = 'visible';
+
+}
+
+
+function showtblManual(){
+	
+	if (document.getElementById("imgManual").src.indexOf('images/AlarmThermoHand.png') > -1 ){
+
+		RecipeID = 100;
+
+		console.log(CurrentRecipeID + "==" + RecipeID);
+
+		if (( RecipeID == 100 ) && (CurrentRecipeID == RecipeID)){
+			document.getElementById("imgPlay").style.visibility = 'visible';
+		}
+		else{
+
+			document.getElementById("imgPlay").style.visibility = 'hidden';
+		}
+
+		document.getElementById("tblRecipeName").style.visibility = 'hidden';
+		document.getElementById("ifryoutube").style.visibility = 'hidden';
+		document.getElementById("tblTabs").style.visibility = 'hidden';
+		document.getElementById("tblIngredients").style.visibility = 'hidden';
+		document.getElementById("tblDirections").style.visibility = 'hidden';
+		document.getElementById("tblNutrition").style.visibility = 'hidden';
+		document.getElementById("tblHome").style.visibility = 'hidden';
+		document.getElementById("tblHistory").style.visibility = 'hidden';
+
+		document.getElementById("tblManual").style.visibility = 'visible';
+	}
+
+}
+
+function showRecipe(){
+
+	
+	if (RecipeID == 100){
+		showtblManual();
+	}
+	else{
+		
+		if ((CurrentRecipeID == -1) || (CurrentRecipeID == RecipeID)) {
+			document.getElementById("imgPlay").style.visibility = 'visible';
+		}
+		else{
+
+			document.getElementById("imgPlay").style.visibility = 'hidden';
+		}
+
+
+
+		$('html, body').stop().animate({ scrollTop : 0 }, 500);
+
+		//$.mobile.silentScroll(0);
+		$( "html" ).scrollTop(0);
+		window.scrollTo(0, 0);
+
+		document.getElementById("tblManual").style.visibility = 'hidden';
+
+		document.getElementById("tblRecipeName").style.visibility = 'visible';
+		document.getElementById("ifryoutube").style.visibility = 'visible';
+		document.getElementById("tblTabs").style.visibility = 'visible';
+
+		if (document.getElementById("IngSel").style.backgroundColor == "orange"){
+			document.getElementById("tblIngredients").style.visibility = 'visible';
+		}
+		else if (document.getElementById("DirSel").style.backgroundColor == "orange"){
+			document.getElementById("tblDirections").style.visibility = 'visible';
+		}
+		else if (document.getElementById("NutSel").style.backgroundColor == "orange"){
+			document.getElementById("tblNutrition").style.visibility = 'visible';
+		}
+
+		document.getElementById("tblHome").style.visibility = 'hidden';
+		document.getElementById("tblHistory").style.visibility = 'hidden';
+
+	}
+	
+
+}
+
+function startVideoAt(t){
+	document.getElementById("ifryoutube").src = "https://www.youtube-nocookie.com/embed/vzGy0ig6WNg?rel=0&start=" + t;
+
+}
+
+function getHours(sec){
+	if (sec > 0)
+		{  return  convertSecToHours(sec,false) }
+	else if (sec == 0) {
+		return 'M'
+	}
+	else
+		{ return 'A'}
+}
+
+function getTemp(temp){
+	if (temp > 0)
+		{  return  ' Temp:' + temp + 'c' }
+	else { return ''}
+}
+
+function convertSecToHours(sec,showSec) {
+	if ( sec > 0 ){
+    var sec_num = parseInt(sec, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+
+    var time    = hours+':'+minutes  //+':'+seconds;
+    if (showSec == true){
+    	time = time + ':'+ seconds;
+    }
+    return time;
+}
+else {
+	return '';
+}
+}
+
+
+
+function getSettingsTable(Auto,Temp,Time,id) {
+	var tblHtml
+	tblHtml = '<table style="width:100%; text-align:center;border-collapse: collapse; height:20px;">'
+	tblHtml = tblHtml + '<tr>'
+	if (Auto == 'false'){
+		tblHtml = tblHtml + '				<td id="t2ds' + (id - 1) +  '" rowspan="2" autoStep="' + Auto + '" style="white-space: nowrap; border-left:2pt solid #e1e1e1;  font-size: 17px; font-weight:bold; vertical-align: middle; color: gray; width:25px;">'
+		tblHtml = tblHtml + '               Ok'
+		tblHtml = tblHtml + '				</td>'
+	}
+
+	if (Temp == 0 & Time == 0){
+	}
+	else {
+		tblHtml = tblHtml + '				<td style="white-space: nowrap; border-left:2pt solid #e1e1e1; border-bottom:2pt solid #e1e1e1; font-size: 9px; vertical-align: middle; color: gray">'
+		tblHtml = tblHtml + '				 ' + Temp + '&#8451;'
+		tblHtml = tblHtml + '				</td>'
+	}
+
+	tblHtml = tblHtml + '			</tr>'
+	tblHtml = tblHtml + '			<tr>'
+
+	tblHtml = tblHtml + '				<td  style="white-space: nowrap; border-left:2pt solid #e1e1e1; font-size: 9px; vertical-align: middle; color: gray">'
+	tblHtml = tblHtml + '					' + getHours(Time)
+	tblHtml = tblHtml + '				</td>'
+	tblHtml = tblHtml + '		</tr></table>'
+	return tblHtml;
+}
+
+function getRecipes(){
+	var myRecipes = new Firebase('https://smartyo.firebaseio.com/recipeDB');
+
+	myRecipes.on('value', function(snapshot) {
+		var response = snapshot.val();
+		var id = -1;
+		var trHTML = '';
+		var evenNo = false;
+
+		$.each(response, function(key, value){
+				//document.getElementById("GolferTable").innerHTML = JSON.stringify(key, undefined, 2);
+				id++
+				$('#selRecipe').append('<option value='+id+'>'+value.name+'</option>');
+
+				if (evenNo == false){
+					trHTML += '<tr>'
+				}
+
+				trHTML += '<td style="width:10px;"></td><td style="background-color:#5d5d5d; padding: 5px; color: white;" onclick="readRecipe(' + id + ');"><img width="150px" height="150px" src="' + value.image + '"><br>' + value.name + '</td>'
+
+				if (evenNo == true){
+					evenNo = false;
+					trHTML += '<td style="width:10px;"></td></tr><tr><td style="height:10px;"></td></tr>'
+				}
+				else {
+					evenNo = true;
+				}
+
+			});
+
+		$('#tblHome').empty();
+		$('#tblHome').append(document.getElementById("tblHomeStatic").innerHTML.replace("backimg","img").replace("backimg","img"));
+		$('#tblHome').append(trHTML);
+
+				//$("#splash").hide();
+				
+				document.getElementById("tblLogo").style.visibility = 'visible';
+
+
+				//$("#backdrop").hide();
+
+				$("#backdrop").fadeOut(2000);
+
+			});
+
+}
+
+getRecipes();
+
+function readRecipe(ID){
+	//document.getElementById("imgPlay").style.visibility = 'hidden';
+	if (RecipeID != ID) {
+		RecipeID = ID;
+		if (RecipeID != 100){
+			addSteps(ID);	
+		}
+		
+	}
+
+	showRecipe();
+}
+
+function swipeleftHandler( event ){
+    //$( event.target ).addClass( "swipeleft" );
+    console.log(event.target.id.replace("tds",""));
+
+    var myRecipeStep = new Firebase('https://smartyo.firebaseio.com/recipeDB/' +  RecipeID + '/steps/' + parseInt(event.target.id.replace("tds","")));
+    myRecipeStep.on('value', function(snapshot) {
+    	$('.dialTemp').val(snapshot.val().temp);
+    	$('.dialTime').val(snapshot.val().time / 60 );
+
+    	tempUpdateURL = 'https://smartyo.firebaseio.com/recipeDB/' +  RecipeID + '/steps/' + event.target.id.replace("tds","") + '/temp'
+    	timeUpdateURL = 'https://smartyo.firebaseio.com/recipeDB/' +  RecipeID + '/steps/' + event.target.id.replace("tds","") + '/time'	
+
+
+    	document.getElementById("EditStepID").innerHTML = "Step " + ((event.target.id.replace("tds","") *1) + 1);
+
+    	$( '#tempDialog' ).popup( 'open' )
+
+
+
+    })
+}
+
+function swiperightHandler( event ){
+   
+   	var myConfig = new Firebase('https://smartyo.firebaseio.com/configuration');
+	myConfig.child('stepID').set(-1);
+   	
+   	if (confirm("Do you really want to jump to this step?"))
+	{
+		myConfig.child('stepID').set(parseInt(event.target.id.replace("tds","")));
+	}			
+
+}
+
+function addSteps(recipeID){
+	var myRecipe = new Firebase('https://smartyo.firebaseio.com/recipeDB/' +  recipeID );
+
+	myRecipe.child("steps").on('value', function(snapshot) {
+		var response = snapshot.val();
+		var id = 0;
+
+			//$('#divSteps').empty();
+
+			var trHTML = '';
+			$('#tblDirections').empty();
+			
+			$.each(response, function(key, value){
+				id++
+					//console.log(value);
+					trHTML = '<tr id="trs' + (id - 1) + '" ><td  style="border-bottom:2pt solid #e1e1e1;"><table class="tableID"><tr><td  class="tdID">' + id + '</td></tr></table></td><td id="tds' + (id - 1) + '" class="tdName">' + value.name + '</td><td class="tdSettings">' + getSettingsTable(value.auto,value.temp,value.time,id)  + '</td></tr>';
+					$('#tblDirections').append(trHTML);
+					$( "#trs" + (id - 1)).on( "swipeleft", swipeleftHandler );
+					$( "#trs" + (id - 1)).on( "swiperight", swiperightHandler );
+				});
+//alert(trHTML);
+
+});
+
+
+	myRecipe.child("ingredients").on('value', function(snapshot) {
+		var response = snapshot.val();
+		var id = 0;
+		var trHTML = '';
+
+		$.each(response, function(key, value){
+			id++
+						//trHTML += '<tr><td  style="border-bottom:2pt solid #e1e1e1;"><table class="tableID"><tr><td  class="tdID">' + id + '</td></tr></table></td><td class="tdName">' + value.name + '</td><td class="tdSettings">' + value.qty + '</td></tr>';
+						trHTML += '<tr ><td style="border-bottom:2pt solid #e1e1e1; height: 40px; font-size: 17px; font-weight:bold; vertical-align: middle; color: #ff8040">' + id + '</td><td style="border-bottom:2pt solid #e1e1e1; height: 40px; font-size: 17px;  vertical-align: middle;">' + value.qty + ' ' + value.unit + ' ' + value.name + '</td></tr>'
+
+					});
+			//alert(trHTML);
+			$('#tblIngredients').empty();
+			$('#tblIngredients').append(trHTML);
+
+			document.getElementById("noOfIngredients").innerHTML = id;
+
+
+		});
+
+		
+
+
+	myRecipe.on('value', function(snapshot) {
+		var response = snapshot.val();
+		document.getElementById("recipeName").innerHTML = response.name;
+		if (response.image.indexOf('youtube') == -1 ){
+			document.getElementById("ifryoutube").src = 'SlideShow.html?img=' + response.image;
+		} else {
+			document.getElementById("ifryoutube").src =  response.image;
+		}
+		document.getElementById("cookTime").innerHTML = getHours(response.cookTime) + ' Hours';
+
+
+
+	});
+
+
+	if ((CurrentRecipeID == RecipeID) && (CurrentRecipeID != -1)){
+			document.getElementById("nutOrLog").innerHTML = "Status"
+			document.getElementById("remainingTime").innerHTML = ""
+
+			addCurrentRecipeLog();
+		}
+		else {
+			document.getElementById("nutOrLog").innerHTML = "Nutrition"
+			document.getElementById("remainingTime").innerHTML = "100 Calories"
+
+			var trHTML
+			trHTML =  '<tr ><td style="border-bottom:2pt solid #e1e1e1; height: 40px; font-size: 17px; font-weight:bold; vertical-align: middle; color: #ff8040;"><img src="images/NutritionsMarkUp.png"></td></tr>' 
+
+			$('#tblNutrition').empty();
+			$('#tblNutrition').append(trHTML);
+					
+
+			
+		}
+
+}
+
+var cookLogID
+
+function addCurrentRecipeLog(){
+
+	if (cookLogID != "NEW"){
+
+
+		var myRecipe = new Firebase('https://smartyolog.firebaseio.com/cooklog/' + cookLogID );
+		
+
+
+		myRecipe.on('value', function(snapshot) {
+			var value = snapshot.val();
+			if (value != null){
+				
+				var id = 0;
+				var trHTML = '';
+				var totalTime = 0;
+				var logid = 0;
+				var lastStepID = -1;
+				
+
+				console.log(value);
+
+
+				
+					
+					totalTime = 0;
+					trHTML = '';
+
+					//console.log(key);
+
+					lastStepID = -1;
+
+					$.each(value.steps, function(key1, value1){
+						id++
+						//console.log(value);
+						if (value1.stepName == 'done'){
+							if (value1.stepID != 100){
+								value1.stepName = 'Completed';
+								value1.stepApproved = '';
+							}
+							else {
+								value1.stepName = 'Waiting for you to enjoy this dish';
+								value1.stepApproved = '';
+							}
+						}
+						if (lastStepID == value1.stepID){
+
+
+
+							trHTML += '<tr><td  style="border-bottom:2pt solid #e1e1e1;"><table class="tableID"><tr><td  class="tdID">' + '</td></tr></table></td><td class="tdName">' + value1.stepApproved + '</td><td class="tdSettings">' + getSettingsTable1(value1.targetTemp,value1.targetTime,value1.stepTime,id) + '</td></tr>';
+
+						}
+						else {
+
+							trHTML += '<tr><td  style="border-bottom:2pt solid #e1e1e1;"><table class="tableID"><tr><td  class="tdID">' + value1.stepID + '</td></tr></table></td><td class="tdName">' + value1.stepName + " "  + value1.stepApproved + '</td><td class="tdSettings">' + getSettingsTable1(value1.targetTemp,-2,value1.stepTime,id) + '</td></tr>';
+							
+						}
+						lastStepID = value1.stepID;
+						totalTime += value1.stepTime;
+					});
+
+					trHTML = trHTML.replace("runningStep" + id,"runningStepTime")
+					
+
+					var od = new Date();
+					od.setTime(((value.timestamp) * 1000 ) );
+					var keyString = "'" + cookLogID + "'"
+					trHTML =  '<tr style="background-color: gray;" ><td colspan="2" style="color:white;"  class="tdName">' + formatDate(od) + '  <a onclick="deleteLog(' + keyString + ')">X</a></td><td style="color:white;"  class="tdSettings">' + convertSecToHours(totalTime,true) + '</td></tr>' + trHTML;
+
+					logid++;
+					trHTML +=  '<tr><td style="color:white; vertical-align:top;" colspan="3"><textarea id="txtNotes' + cookLogID  + '" style="width:100%;" rows="4" >' + value.notes + '</textarea> </td></tr>' 
+
+					$('#tblNutrition').empty();
+					$('#tblNutrition').append(trHTML);
+					attachNotesEvents(cookLogID);
+			
+
+
+
+
+}			
+
+});
+}
+
+}
+
+function getParameterByName(name) {
+	name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	results = regex.exec(location.search);
+	return results === null ? "-1" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+var RecipeID = getParameterByName('ID');
+var CurrentRecipeID;
+
+if (RecipeID > -1){
+	addSteps(RecipeID);
+}
+else {
+	showHome();
+}
+
+function showCurrentRecipe(){
+	readRecipe(CurrentRecipeID);
+
+	if (RecipeID != 100){
+		selecttab('Nut');
+	}
+}
+
+
+var myDataRef = new Firebase('https://smartyo.firebaseio.com/SmartYoState');
+
+myDataRef.on('value', function(snapshot) {
+	var response = snapshot.val();
+
+	cookLogID = response.cookLogID
+
+	if (response.connected == 'true'){
+		document.getElementById("Heat").src =  'images/Heat.png';
+		document.getElementById("Cool").src =  'images/Cool.png';
+		document.getElementById("Timer").src =  'images/Timer.png';
+		document.getElementById("Stir").src =  'images/Stir.png';
+		document.getElementById("imgTemperature").src =  'images/Temperature.png';
+		document.getElementById("Timer2").src =  'images/Timer.png';
+		document.getElementById("tblCurrentRecipe").style.color= 'orange';
+		if (response.temperature > 100){
+			document.getElementById("temperature").style.color= 'orange';
+		}
+		else {
+			document.getElementById("temperature").style.color= 'orange';
+		}
+		if ((response.recipeID > -1) && (response.recipeID != 100)){
+			$('#imgManual').attr("src", 'images/AlarmThermoHandD.png');
+			$("#aManual").attr("href", "");
+		}
+		else {
+			$('#imgManual').attr("src", 'images/AlarmThermoHand.png');
+			$("#aManual").attr("href", "#tempDialog");
+		}
+		$("#approveButton").attr("href", "#popupDialog");
+		document.getElementById("imgHand").src =  'images/Hand.png';
+	}else{
+		document.getElementById("Heat").src =  'images/HeatD.png';
+		document.getElementById("Cool").src =  'images/CoolD.png';
+		document.getElementById("Timer").src =  'images/TimerD.png';
+		document.getElementById("Stir").src =  'images/StirD.png';
+		document.getElementById("imgTemperature").src =  'images/TemperatureD.png';
+		document.getElementById("Timer2").src =  'images/TimerD.png';
+		document.getElementById("tblCurrentRecipe").style.color = 'gray';
+		document.getElementById("temperature").style.color= 'gray';
+		$('#imgManual').attr("src", 'images/AlarmThermoHandD.png');
+		$("#aManual").attr("href", "");
+		$("#approveButton").attr("href", "");
+		document.getElementById("imgHand").src =  'images/HandD.png';
+	}
+
+	if ((CurrentRecipeID == RecipeID) && (response.recipeID == -1) && (RecipeID != -1) && (RecipeID != 100)){
+
+		addSteps(RecipeID);
+	}
+
+	CurrentRecipeID = response.recipeID;
+
+	if ((RecipeID == -1) && (CurrentRecipeID != -1) ){
+		showCurrentRecipe();
+	}
+
+
+	if (response.Heater > 0){
+		document.getElementById("Heat").className = 'heaterblink';
+	}
+	else {
+		document.getElementById("Heat").className = '';
+	}
+
+	if (response.targetTime > 0){
+		document.getElementById("Timer").className = 'heaterblink';
+	}
+	else{
+		document.getElementById("Timer").className = '';
+	}
+
+	if (response.fanPWM > 0){
+		document.getElementById("Cool").className = 'heaterblink';
+	}
+	else {
+		document.getElementById("Cool").className = '';
+	}	
+
+
+			/*if (response.targetTime == -1){
+				//document.getElementById("HeatCool").src = 'images/Cool6Trans.png'
+				//document.getElementById("HeatCool").style.visibility = 'visible';
+			  //document.getElementById("Timer").src = 'images/TimerCoolTrans2.png'
+			  	document.getElementById("Timer").className = '';
+
+			  	if (response.fanPWM > 0){
+					document.getElementById("Cool").className = 'heaterblink';
+				}
+				else {
+					document.getElementById("Cool").className = '';
+				}
+			
+			}
+			else if (response.targetTime > -1 && response.targetTemp > 0){
+				//document.getElementById("HeatCool").src = 'images/Heat3Trans.png'
+				//document.getElementById("HeatCool").style.visibility = 'visible';
+				//document.getElementById("Timer").src = 'images/TimerTrans2.png'
+				if (response.pidOutput > 0){
+					document.getElementById("Heat").className = 'heaterblink';
+				}
+				else {
+					document.getElementById("Heat").className = '';
+				}
+
+				if (response.targetTime > 0){
+					document.getElementById("Timer").className = 'heaterblink';
+				}
+				else{
+					document.getElementById("Timer").className = '';
+				}
+
+				if (response.fanPWM > 0){
+					document.getElementById("Cool").className = 'heaterblink';
+				}
+				else {
+					document.getElementById("Cool").className = '';
+				}
+
+			}
+			else {
+
+				if (response.fanPWM > 0){
+					document.getElementById("Cool").className = 'heaterblink';
+				}
+				else {
+					document.getElementById("Cool").className = '';
+				}
+
+				document.getElementById("Heat").className = '';
+			}
+			*/
+
+			if (response.recipeID == -1){
+
+
+
+				// document.getElementById("tblCurrentRecipe").style.visibility = 'hidden';
+				
+
+
+				/*document.getElementById("currentRecipeName").innerHTML = response.recipe;
+
+				document.getElementById("currentRecipeName").style.visibility = 'hidden';
+
+				document.getElementById("temperature").style.visibility = 'hidden';
+				//document.getElementById("HeatCool").style.visibility = 'hidden';
+
+				document.getElementById("temperatureTo").style.visibility = 'hidden';
+				document.getElementById("time").style.visibility = 'hidden';
+				//document.getElementById("Timer").style.visibility = 'hidden';
+
+				document.getElementById("timeTo").style.visibility = 'hidden';*/
+
+				document.getElementById("approveButton").style.visibility = 'hidden';
+				//document.getElementById("Heat").className = '';
+				//document.getElementById("Cool").className = '';
+				//document.getElementById("Timer").className = '';
+
+				document.getElementById("temperature").innerHTML= response.temperature.toFixed(2) + '<font style="font-size: 7px; text-align:left;">&#8451;</font>'; //+ '&#8451;';
+				document.getElementById("tempChange").innerHTML= response.tempChangeRate.toFixed(2) + '%';
+
+				document.getElementById("currentRecipeName").innerHTML = "";
+				document.getElementById("temperatureTo").innerHTML= "";
+				document.getElementById("time").innerHTML= "";
+				document.getElementById("timeTo").innerHTML= "";
+				document.getElementById("Timer2").style.visibility = 'hidden';
+
+
+				if (response.connected == 'true'){
+					document.getElementById("imgPlay").src =  'images/Play.png';
+					$("#startStop").attr("href", "#startStopDialog");
+				}
+				else {
+					document.getElementById("imgPlay").src =  'images/PlayD.png';
+					$("#startStop").attr("href", "");
+				}
+
+				document.getElementById("startStopMsg").innerHTML = 'Are you sure you want to start this recipe?';
+				
+
+				if (document.getElementById("tblRecipeName").style.visibility == 'visible'){
+					document.getElementById("imgPlay").style.visibility = 'visible';
+				}
+				
+			}
+			else {
+				document.getElementById("tblCurrentRecipe").style.visibility = 'visible';
+
+				/*document.getElementById("currentRecipeName").style.visibility = 'visible';
+				document.getElementById("temperature").style.visibility = 'visible';
+				//document.getElementById("HeatCool").style.visibility = 'visible';
+				document.getElementById("temperatureTo").style.visibility = 'visible';
+				document.getElementById("time").style.visibility = 'visible';
+				//document.getElementById("Timer").style.visibility = 'visible';
+				document.getElementById("timeTo").style.visibility = 'visible';*/
+
+				document.getElementById("currentRecipeName").innerHTML = response.recipe + ' [' + response.recipeStatus + ']';
+			document.getElementById("temperature").innerHTML= response.temperature.toFixed(2) + '<font style="font-size: 7px; text-align:left;">&#8451;</font>'; //+ '&#8451;';
+			document.getElementById("tempChange").innerHTML= response.tempChangeRate.toFixed(2) + '%';
+
+			if (response.targetTemp > 0) {
+				document.getElementById("temperatureTo").innerHTML= response.targetTemp.toFixed(2) + '<font style="font-size: 7px; text-align:left;">&#8451;</font>'; // + '&#8451;';
+			}
+			else {
+				document.getElementById("temperatureTo").innerHTML= "";
+			}
+			document.getElementById("time").innerHTML= convertSecToHours(response.stepTime,true);
+			if (document.getElementById("runningStepTime") != null){
+				document.getElementById("runningStepTime").innerHTML= convertSecToHours(response.stepTime,true);
+	
+			}
+
+			document.getElementById("timeTo").innerHTML= convertSecToHours(response.targetTime,true);
+			document.getElementById("Timer2").style.visibility = 'visible';
+
+			//space hilder for logo icons
+
+			if (response.stepApproved == "waiting"){
+				document.getElementById("approveButton").style.visibility = 'visible';
+			}
+			else {
+				document.getElementById("approveButton").style.visibility = 'hidden';
+			}
+
+			document.getElementById("time").innerHTML= convertSecToHours(response.stepTime,true);
+		}
+
+		if ((RecipeID == response.recipeID) && (response.recipeID > -1 ))
+		{
+			if (response.connected == 'true'){
+
+			 		//console.log(RecipeID + "=1=" +  response.recipeID);
+
+			 		document.getElementById("imgPlay").src =  'images/Stop.png';
+			 		$("#startStop").attr("href", "#startStopDialog");
+			 	}
+			 	else {
+			 		document.getElementById("imgPlay").src =  'images/StopD.png';
+			 		$("#startStop").attr("href", "");
+			 	}
+			 	document.getElementById("startStopMsg").innerHTML = 'Are you sure you want to stop this recipe?';
+
+			 	if ((document.getElementById("tblRecipeName").style.visibility == 'visible') || (document.getElementById("tblManual").style.visibility == 'visible')) {
+			 		document.getElementById("imgPlay").style.visibility = 'visible';
+			 	}
+
+			 	for (i = 0; i < 20 ; i++) {
+			 		if (i < response.stepID){
+				 		if (	document.getElementById("tds" + i ) != null){
+				 			document.getElementById("tds" + i).className = 'tdName';
+				 			document.getElementById("tds" + i).style.color='#ff8040';
+				 		}
+				 		if (	document.getElementById("t2ds" + i ) != null){
+							//console.log(document.getElementById("t2ds" + response.stepID ).getAttribute( "autoStep" ));
+							document.getElementById("t2ds" + i ).className = '';
+							document.getElementById("t2ds" + i ).innerHTML = 'Ok';
+						}
+					}
+					else {
+						if (document.getElementById("tds" + i ) != null){
+							document.getElementById("tds" + i).className = 'tdName';
+				 			document.getElementById("tds" + i).style.color='gray';
+						}
+						if (document.getElementById("t2ds" + i ) != null){
+							document.getElementById("t2ds" + i ).className = '';
+							document.getElementById("t2ds" + i ).innerHTML = 'Ok';
+						}	
+						
+					}
+				}
+
+				if ( response.stepID > -1 )
+				{
+					if (document.getElementById("tds" + response.stepID ) != null)
+					{
+						if (response.stepApproved == "waiting"){
+							if (	document.getElementById("t2ds" + response.stepID ) != null){
+
+								if (response.connected == 'true'){
+									document.getElementById("t2ds" + response.stepID ).className = 'objblink';
+									document.getElementById("t2ds" + response.stepID ).innerHTML = '<a href="#popupDialog" data-rel="popup" data-position-to="window" data-inline="true" data-transition="slidedown" data-theme="b">Ok</a>';
+								}
+								else
+								{
+									document.getElementById("t2ds" + response.stepID ).className = 'objblinkD';
+									document.getElementById("t2ds" + response.stepID ).innerHTML = 'Ok';
+								}
+							}
+						}
+						else {
+							if (	document.getElementById("t2ds" + response.stepID ) != null)
+							{
+								//console.log(document.getElementById("t2ds" + response.stepID ).getAttribute( "autoStep" ));
+								document.getElementById("t2ds" + response.stepID ).className = '';
+								document.getElementById("t2ds" + response.stepID ).innerHTML = 'Ok';
+							}
+							document.getElementById("tds" + response.stepID ).className = 'objblink';
+
+						}
+					}
+				}
+			}
+			else {
+
+					//console.log(response.recipeID + " =3= " + RecipeID)
+					document.getElementById("imgPlay").style.visibility = 'hidden';
+
+					if (( response.recipeID == -1) && ( RecipeID != 100)){
+						if (response.connected == 'true'){
+							document.getElementById("imgPlay").src =  'images/Play.png';
+							$("#startStop").attr("href", "#startStopDialog");
+						}
+						else {
+							document.getElementById("imgPlay").src =  'images/PlayD.png';
+							$("#startStop").attr("href", "");
+						}
+
+						document.getElementById("startStopMsg").innerHTML = 'Are you sure you want to start this recipe?';
+						if (document.getElementById("tblRecipeName").style.visibility == 'visible'){
+							document.getElementById("imgPlay").style.visibility = 'visible';
+						}
+					}
+					else if (response.recipeID > -1) {
+						if (response.connected == 'true'){
+							//console.log(RecipeID + "=2=" +  response.recipeID);
+
+							document.getElementById("imgPlay").src =  'images/Stop.png';
+							$("#startStop").attr("href", "#startStopDialog");
+						}
+						else {
+							document.getElementById("imgPlay").src =  'images/StopD.png';
+							$("#startStop").attr("href", "");
+						}
+						document.getElementById("startStopMsg").innerHTML = 'Are you sure you want to stop this recipe?';
+						document.getElementById("imgPlay").style.visibility = 'hidden';
+					}
+				}
+			});
+
+
+$(document).ready( function() {
+	$(".ui-loader").hide();
+
+
+});
+
+function ButtonPressed(className) {
+	if (className == 'objblink')
+	{
+					//if (confirm("Do you really want to change current step?"))
+				//	{
+
+					$.ajax({
+						url: "https://agent.electricimp.com/JBVAsBovEnR1/buttonpress", success: function (result) {
+							alert(result);
+						}
+					});
+					//}
+				}
+			}
+
+			function StartRecipe() {
+				if (document.getElementById("imgPlay").src.indexOf('D.png') > -1){
+					return false;
+				}
+				else if (document.getElementById("imgPlay").src.indexOf('Play') > -1){
+				//if (confirm("Do you really want to start this recipe?"))
+				//{
+
+					var myConfig = new Firebase('https://smartyo.firebaseio.com/configuration');
+					myConfig.child('recipeID').set(RecipeID);
+					
+					if ((CurrentRecipeID == -1) && (RecipeID == 100)){
+						if (toBeTemp != undefined){
+							myConfig.child('target').set(toBeTemp);
+						}
+						if (toBeFan != undefined){
+							myConfig.child('fan').set(toBeFan);
+						}
+						if (toBeStirrer != undefined){
+							myConfig.child('stirrer').set(toBeStirrer);
+						}
+					}
+
+					toBeTemp = 0;
+					toBeTimer = 0;
+					toBeFan = 0;
+					toBeStirrer = 0;
+
+					document.getElementById("imgPlay").style.visibility = 'hidden';
+
+					/*document.getElementById("imgPlay").src =  'images/Stop.png';
+					$("#startStop").attr("href", "#startStopDialog");
+					document.getElementById("startStopMsg").innerHTML = 'Are you sure you want to stop this recipe?';
+					if (document.getElementById("tblHistory").style.visibility == 'hidden'){
+						document.getElementById("imgPlay").style.visibility = 'visible';
+					}*/
+				//}
+			}
+			else {
+				/*console.log('stopped');
+					$.ajax({
+						url: "https://agent.electricimp.com/JBVAsBovEnR1/restart", success: function (result) {
+							alert(result);
+						}
+					});*/
+
+$('.dialTempManual').val(0).trigger('change');
+console.log($('input[name=radio-temp]:checked'));
+$('input[name=radio-temp]:checked').attr('checked', false);
+$('input[name=radio-fan]:checked').attr('checked', false);
+$('input[name=radio-stirrer]:checked').attr('checked', false);
+
+$("input[type='radio']").checkboxradio("refresh");
+
+$('input[id=radio-fan-off]').attr('checked', true);
+
+
+$('input[id=radio-stirrer-off]').attr('checked', 'checked');
+
+$('input[name=radio-timer]:checked').attr('checked', false);
+
+$("input[type='radio']").checkboxradio("refresh");
+
+
+$('.dialTimeManual').val(0).trigger('change');
+
+
+var myConfig = new Firebase('https://smartyo.firebaseio.com/configuration');
+myConfig.child('recipeID').set(-1);	
+myConfig.child('target').set(0);
+myConfig.child('fan').set(0);
+myConfig.child('stirrer').set(0);
+
+
+document.getElementById("imgPlay").style.visibility = 'hidden';
+
+				/*
+				document.getElementById("imgPlay").src =  'images/Play.png';
+				$("#startStop").attr("href", "#startStopDialog");
+				document.getElementById("startStopMsg").innerHTML = 'Are you sure you want to start this recipe?';
+				if (document.getElementById("tblHistory").style.visibility == 'hidden'){
+					document.getElementById("imgPlay").style.visibility = 'visible';
+				}*/
+			  //}
+			}
+
+		}
+
+
+		function convertSecToHours1(sec,showSec) {
+			var ignoreSec = 0
+			if (showSec == false){
+				ignoreSec = 60;
+			}
+
+			if ( sec > -1 ){
+	    	var sec_num = parseInt(sec, 10); // don't forget the second param
+	    	var hours   = Math.floor(sec_num / 3600);
+	    	var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+	    	var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+	    	if (hours   < 10) {hours   = "0"+hours;}
+	    	if (minutes < 10) {minutes = "0"+minutes;}
+	    	if (seconds < 10) {seconds = "0"+seconds;}
+
+		    var time    = hours+':'+minutes  //+':'+seconds;
+		    if (showSec == true){
+		    	time = time + ':'+ seconds;
+		    }
+		    return time;
+		}
+		else {
+			return '';
+		}
+	}
+
+	function addHistory(){
+
+		$('#tblHistory').empty();
+
+		var myRecipe = new Firebase('https://smartyolog.firebaseio.com/cooklog' );
+
+
+
+		myRecipe.orderByChild("recipeID").equalTo(RecipeID).on('value', function(snapshot) {
+			var response = snapshot.val();
+			if (response != null){
+
+				var id = 0;
+				var trHTML = '';
+				var totalTime = 0;
+				var logid = 0;
+				var lastStepID = -1;
+
+
+
+
+				$.each(response, function(key, value){
+
+					totalTime = 0;
+					trHTML = '';
+
+					//console.log(key);
+
+					lastStepID = -1;
+
+					$.each(value.steps, function(key1, value1){
+						id++
+						//console.log(value);
+						if (lastStepID == value1.stepID){
+							trHTML += '<tr  ><td  style="border-bottom:2pt solid #e1e1e1;"><table class="tableID"><tr><td  class="tdID">' + '</td></tr></table></td><td class="tdName">' + value1.stepApproved + '</td><td class="tdSettings">' + convertSecToHours1(value1.stepTime,true) + '</td></tr>';
+
+						}
+						else {
+							trHTML += '<tr  ><td  style="border-bottom:2pt solid #e1e1e1;"><table class="tableID"><tr><td  class="tdID">' + value1.stepID + '</td></tr></table></td><td  class="tdName">' + value1.stepName + " "  + value1.stepApproved + '</td><td class="tdSettings">' + getSettingsTable1(value1.targetTemp,value1.targetTime,value1.stepTime,id) + '</td></tr>';
+
+						}
+						lastStepID = value1.stepID;
+						totalTime += value1.stepTime;
+					});
+
+					
+
+					var od = new Date();
+					od.setTime(((value.timestamp) * 1000 ) );
+					var keyString = "'" + key + "'"
+					trHTML =  '<tr style="background-color: gray;" ><td colspan="2" style="color:white;"   class="tdName"><b>' + value.recipe + '</b> on ' + formatDate(od) + '</td><td style="color:white;"  class="tdSettings"><a onclick="deleteLog(' + keyString + ')">X</a> ' + convertSecToHours(totalTime,true) + '</td></tr>' + trHTML;
+
+					logid++;
+					trHTML +=  '<tr><td style="color:white;" colspan="3"><textarea id="txtNotes' + key  + '" style="width:100%;" rows="4" >' + value.notes + '</textarea> </td></tr>' 
+
+					$('#tblHistory').append(trHTML);
+					attachNotesEvents(key);
+				});
+
+
+
+
+}			
+
+});
+
+
+
+}
+
+function attachNotesEvents (id) {
+	$('#txtNotes' + id).change(function (e) {
+
+		var myDataRef = new Firebase('https://smartyolog.firebaseio.com/cooklog/' + id );
+		myDataRef.child('notes').set($('#txtNotes' + id).val());
+		//var d = new Date();
+		//myDataRef.child('timestamp').set(d.getTime()/1000.0);
+		
+	});
+}
+
+function deleteLog(id){
+	if (confirm("Do you really want to delete " + id + " log?"))
+	{
+		var delRef = new Firebase('https://smartyolog.firebaseio.com/cooklog/' + id );
+		delRef.remove();
+	}
+}
+
+
+
+function getSettingsTable1(Temp,Time,stepTime,id) {
+	var tblHtml
+	tblHtml = '<table style="width:100%; text-align:center;border-collapse: collapse; height:30px;">'
+	tblHtml = tblHtml + '<tr>'
+	tblHtml = tblHtml + '				<td style="white-space: nowrap;  border-bottom:2pt solid #e1e1e1; font-size: 9px; vertical-align: middle; color: gray">'
+	tblHtml = tblHtml + '				 ' + Temp + '&#8451;'
+	tblHtml = tblHtml + '				</td>'
+	tblHtml = tblHtml + '				<td style="white-space: nowrap; border-left:2pt solid #e1e1e1; border-bottom:2pt solid #e1e1e1; font-size: 9px; vertical-align: middle; color: gray">'
+	tblHtml = tblHtml + '				 ' + getHours(Time) 
+	tblHtml = tblHtml + '				</td>'
+	tblHtml = tblHtml + '			</tr>'
+	tblHtml = tblHtml + '<tr>'
+	tblHtml = tblHtml + '				<td colspan="2" id="runningStep' + id + '"   style="white-space: nowrap; vertical-align: middle; color: #ff8040">'
+	tblHtml = tblHtml + '				 ' + convertSecToHours1(stepTime,true) 
+	tblHtml = tblHtml + '				</td>'
+	tblHtml = tblHtml + '			</tr></table>'
+	return tblHtml;
+}
+
+
+
+
+</script>
+
+</body>
+</html>
